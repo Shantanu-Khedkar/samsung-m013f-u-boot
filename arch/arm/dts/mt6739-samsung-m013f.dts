@@ -1,0 +1,52 @@
+/dts-v1/;
+
+/ {
+    #address-cells = <0x02>;
+    #size-cells = <0x02>;
+    interrupt-parent = <&gic>;
+	compatible="mediatek,mt6739";
+
+    chosen {
+		bootargs = "console=tty0 console=ttyMT0,115200n1 root=/dev/ram loglevel=8 androidboot.hardware=mt6735";
+    };
+
+    memory@0 {
+        device_type = "memory";
+		reg = <0x00 0x40000000 0x00 0x80000000>;
+    };
+
+    reserved-memory {
+        #address-cells = <2>;
+        #size-cells = <2>;
+        ranges;
+
+        framebuffer@76740000 {
+            compatible = "simple-framebuffer";
+			reg = <0x00 0x76740000 0x00 0xec0000>;
+        };
+    };
+
+    gic: interrupt-controller@0c000000 {
+        compatible = "arm,gic-400";
+        reg = <0x00 0xc000000 0x00 0x40000 0x00 0xc080000 0x00 0x200000 0x00 0x10200620 0x00 0x1000>;
+        interrupt-controller;
+        #interrupt-cells = <3>;
+        interrupt-parent = <&gic>;
+    };
+
+    timer {
+        compatible = "arm,armv8-timer";
+        interrupt-parent = <&gic>;
+        interrupts = <0x01 0x0d 0x08 0x01 0x0e 0x08 0x01 0x0b 0x08 0x01 0x0a 0x08>;
+        clock-frequency = <13000000>;
+    };
+
+    framebuffer@76740000 {
+        compatible = "simple-framebuffer";
+        reg = <0x00 0x76740000 0x00 0xec0000>;
+        width = <720>;
+        height = <1480>;
+        stride = <2880>;
+        format = "a8b8g8r8";
+    };
+};
