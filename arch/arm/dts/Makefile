@@ -1270,6 +1270,8 @@ dtb-$(CONFIG_SOC_K3_AM625) += k3-am62a7-sk.dtb \
 			      k3-am62a7-r5-sk.dtb
 
 dtb-$(CONFIG_ARCH_MEDIATEK) += \
+        mt6735-test.dtb \
+	mt6737t-samsung-grandpplte.dtb \
 	mt7622-rfb.dtb \
 	mt7623a-unielec-u7623-02-emmc.dtb \
 	mt7622-bananapi-bpi-r64.dtb \
@@ -1356,7 +1358,7 @@ targets += $(dtb-y)
 
 # Add any required device tree compiler flags here
 DTC_FLAGS += -a 0x8
-
+#DTC_FLAGS += -R 4 -p 0x4000
 PHONY += dtbs
 dtbs: $(addprefix $(obj)/, $(dtb-y))
 	@:
